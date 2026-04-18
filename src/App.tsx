@@ -8,7 +8,7 @@ import { startTransition, useEffect, useState } from 'react'
 import { slides } from './slides'
 
 const swipeThreshold = 90
-const brandLogoPath = '/digital-movement-logo-negative.svg'
+const brandLogoPath = `${import.meta.env.BASE_URL}digital-movement-logo-negative.svg`
 
 function clampSlideIndex(index: number) {
   return Math.max(0, Math.min(slides.length - 1, index))
@@ -187,17 +187,33 @@ function App() {
                   className="slide-rail"
                   data-has-deliverable={activeSlide.deliverable ? 'true' : 'false'}
                 >
-                  <div className="rail-stat">
-                    <span className="rail-label">{activeSlide.primaryPanelLabel}</span>
-                    <p>{activeSlide.primaryPanelText}</p>
+                  <div className="rail-visual">
+                    <img
+                      className="rail-visual-image"
+                      src={activeSlide.visual.src}
+                      alt={activeSlide.visual.alt}
+                      loading="eager"
+                    />
+                    <div className="rail-visual-scrim" aria-hidden="true" />
+                    <div className="rail-visual-copy">
+                      <span className="rail-label">{activeSlide.visual.label}</span>
+                      <p>{activeSlide.visual.title}</p>
+                    </div>
                   </div>
 
-                  {activeSlide.deliverable ? (
-                    <div className="rail-deliverable">
-                      <span className="rail-label">Delivered at this milestone</span>
-                      <p>{activeSlide.deliverable}</p>
+                  <div className="rail-card-stack">
+                    <div className="rail-stat">
+                      <span className="rail-label">{activeSlide.primaryPanelLabel}</span>
+                      <p>{activeSlide.primaryPanelText}</p>
                     </div>
-                  ) : null}
+
+                    {activeSlide.deliverable ? (
+                      <div className="rail-deliverable">
+                        <span className="rail-label">Delivered at this milestone</span>
+                        <p>{activeSlide.deliverable}</p>
+                      </div>
+                    ) : null}
+                  </div>
 
                   <div className="rail-accent-word" aria-hidden="true">
                     {activeSlide.accentWord}

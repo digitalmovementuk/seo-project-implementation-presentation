@@ -1,3 +1,12 @@
+const stockAsset = (name: string) => `${import.meta.env.BASE_URL}stock/${name}`
+
+type SlideVisual = {
+  src: string
+  alt: string
+  label: string
+  title: string
+}
+
 export type PresentationSlide = {
   id: string
   eyebrow: string
@@ -8,6 +17,34 @@ export type PresentationSlide = {
   primaryPanelText: string
   deliverable?: string
   accentWord: string
+  visual: SlideVisual
+}
+
+const visuals = {
+  motion: {
+    src: stockAsset('motion-blur-dark.jpg'),
+    alt: 'Abstract monochrome motion blur',
+    label: 'Mood frame',
+    title: 'Momentum and movement',
+  },
+  city: {
+    src: stockAsset('city-dusk.jpg'),
+    alt: 'Aerial city skyline at dusk',
+    label: 'Location frame',
+    title: 'Markets, density, and reach',
+  },
+  clipboard: {
+    src: stockAsset('writing-clipboard.jpg'),
+    alt: 'Person writing on a clipboard beside a laptop',
+    label: 'Planning frame',
+    title: 'Analysis, planning, and prioritisation',
+  },
+  workspace: {
+    src: stockAsset('minimal-workspace.jpg'),
+    alt: 'Minimal desk workspace with laptop and warm light',
+    label: 'Execution frame',
+    title: 'Clarity, craft, and implementation',
+  },
 }
 
 export const slides: PresentationSlide[] = [
@@ -27,6 +64,7 @@ export const slides: PresentationSlide[] = [
     primaryPanelText:
       'This gives the lead an immediate answer to the only question that matters: how the work becomes commercial opportunity.',
     accentWord: 'Growth',
+    visual: visuals.motion,
   },
   {
     id: 'client-goals',
@@ -44,6 +82,7 @@ export const slides: PresentationSlide[] = [
     primaryPanelText:
       'The project stays focused on what a buyer can understand fast: visibility, relevance, and enquiries.',
     accentWord: 'Demand',
+    visual: visuals.motion,
   },
   {
     id: 'milestone-1',
@@ -62,6 +101,7 @@ export const slides: PresentationSlide[] = [
       'This replaces guessing with evidence, so the business knows where growth is most likely to come from.',
     deliverable: 'SEO Opportunity Analysis Report',
     accentWord: 'Analysis',
+    visual: visuals.clipboard,
   },
   {
     id: 'receive-1',
@@ -79,6 +119,7 @@ export const slides: PresentationSlide[] = [
     primaryPanelText:
       'This helps the client stop wasting time on low-value assumptions and focus on what is genuinely worth pursuing.',
     accentWord: 'Clarity',
+    visual: visuals.clipboard,
   },
   {
     id: 'milestone-2',
@@ -97,6 +138,7 @@ export const slides: PresentationSlide[] = [
       'The client gets a smarter path to local visibility instead of trying to chase every location equally.',
     deliverable: 'Location Opportunity and Priority Map',
     accentWord: 'Local',
+    visual: visuals.city,
   },
   {
     id: 'receive-2',
@@ -114,6 +156,7 @@ export const slides: PresentationSlide[] = [
     primaryPanelText:
       'The rollout becomes more efficient because attention goes first to the locations most likely to generate leads.',
     accentWord: 'Priority',
+    visual: visuals.city,
   },
   {
     id: 'milestone-3',
@@ -132,6 +175,7 @@ export const slides: PresentationSlide[] = [
       'This is where SEO stops being a loose set of ideas and becomes a focused commercial plan.',
     deliverable: 'Full SEO Page Strategy Document',
     accentWord: 'Strategy',
+    visual: visuals.clipboard,
   },
   {
     id: 'receive-3',
@@ -149,6 +193,7 @@ export const slides: PresentationSlide[] = [
     primaryPanelText:
       'This creates speed and alignment because every next step is tied back to visibility and growth.',
     accentWord: 'Blueprint',
+    visual: visuals.workspace,
   },
   {
     id: 'milestone-4',
@@ -167,6 +212,7 @@ export const slides: PresentationSlide[] = [
       'Getting found is only part of the job. The page also has to make sense, build trust, and convert.',
     deliverable: 'SEO Page Brief Pack',
     accentWord: 'Messaging',
+    visual: visuals.workspace,
   },
   {
     id: 'receive-4',
@@ -184,6 +230,7 @@ export const slides: PresentationSlide[] = [
     primaryPanelText:
       'This improves consistency and reduces friction because the most important pages no longer start from a blank page.',
     accentWord: 'Content',
+    visual: visuals.workspace,
   },
   {
     id: 'milestone-5',
@@ -202,6 +249,7 @@ export const slides: PresentationSlide[] = [
       'The client sees early momentum where the return is most likely to be strongest, instead of waiting for everything.',
     deliverable: 'Priority Launch Package',
     accentWord: 'Launch',
+    visual: visuals.motion,
   },
   {
     id: 'timeline',
@@ -220,6 +268,7 @@ export const slides: PresentationSlide[] = [
     primaryPanelText:
       'The lead can see exactly when clarity, structure, and launch-ready direction are created across the project.',
     accentWord: 'Timing',
+    visual: visuals.clipboard,
   },
   {
     id: 'full-stack',
@@ -238,6 +287,7 @@ export const slides: PresentationSlide[] = [
     primaryPanelText:
       'This turns the project into a long-term business asset rather than a short-term burst of SEO activity.',
     accentWord: 'Assets',
+    visual: visuals.workspace,
   },
   {
     id: 'growth-logic',
@@ -255,6 +305,7 @@ export const slides: PresentationSlide[] = [
     primaryPanelText:
       'Every deliverable reduces guesswork and increases the odds that the work turns into real commercial opportunity.',
     accentWord: 'Impact',
+    visual: visuals.motion,
   },
   {
     id: 'commercial-sense',
@@ -272,6 +323,7 @@ export const slides: PresentationSlide[] = [
     primaryPanelText:
       'If a step does not help the client make better growth decisions, it does not belong in the process.',
     accentWord: 'Focus',
+    visual: visuals.motion,
   },
   {
     id: 'next-step',
@@ -289,5 +341,6 @@ export const slides: PresentationSlide[] = [
     primaryPanelText:
       'This gives the lead a clean, sensible first step and makes the engagement feel grounded from the start.',
     accentWord: 'Action',
+    visual: visuals.workspace,
   },
 ]

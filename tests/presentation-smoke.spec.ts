@@ -35,8 +35,12 @@ test('slide navigation works from keyboard and controls', async ({ page }, testI
   await expect(page.locator('h1')).toContainText('Launch of priority SEO assets')
 
   await expect(page.locator('.brand-logo')).toBeVisible()
+  await expect
+    .poll(async () => page.locator('.brand-logo').evaluate((img) => (img as HTMLImageElement).naturalWidth))
+    .toBeGreaterThan(0)
 
   if (testInfo.project.name === 'desktop-chromium') {
+    await expect(page.locator('.rail-visual-image')).toBeVisible()
     await expect(page.locator('.slide-brand-mark img')).toBeVisible()
   }
 })

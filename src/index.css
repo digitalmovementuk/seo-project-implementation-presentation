@@ -363,9 +363,56 @@ h1 {
 .slide-rail {
   position: relative;
   min-width: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto auto;
+  gap: 16px;
+  min-height: 0;
+}
+
+.rail-visual {
+  position: relative;
+  min-height: 220px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.rail-visual-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.03);
+  filter: saturate(0.82) contrast(0.95) brightness(0.88);
+}
+
+.rail-visual-scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(17, 18, 24, 0.04), rgba(17, 18, 24, 0.78)),
+    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.18), transparent 28%);
+}
+
+.rail-visual-copy {
+  position: absolute;
+  inset-inline: 18px;
+  bottom: 18px;
+}
+
+.rail-visual-copy p {
+  margin: 8px 0 0;
+  max-width: 16ch;
+  color: var(--slide-text);
+  font-size: 1rem;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+}
+
+.rail-card-stack {
+  position: relative;
+  z-index: 1;
+  display: grid;
   gap: 16px;
 }
 
@@ -408,20 +455,7 @@ h1 {
 }
 
 .rail-accent-word {
-  position: absolute;
-  top: -0.1rem;
-  right: 0;
-  z-index: 0;
-  max-width: 6ch;
-  color: rgba(255, 255, 255, 0.05);
-  font-family: var(--font-display);
-  font-size: clamp(2.8rem, 6.8vw, 5.5rem);
-  font-weight: 400;
-  line-height: 0.88;
-  letter-spacing: -0.06em;
-  text-align: right;
-  pointer-events: none;
-  user-select: none;
+  display: none;
 }
 
 .slide-brand-mark {
@@ -595,6 +629,10 @@ h1 {
     padding-top: 10px;
   }
 
+  .rail-visual {
+    min-height: 180px;
+  }
+
   .slide-brand-mark {
     justify-content: flex-start;
   }
@@ -712,13 +750,14 @@ h1 {
     bottom: 18px;
     display: grid;
     grid-template-columns: 1fr;
+    grid-template-rows: auto;
     gap: 8px;
     align-items: end;
     justify-content: stretch;
   }
 
-  .slide-rail[data-has-deliverable='true'] {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .rail-visual {
+    display: none;
   }
 
   .rail-stat,
@@ -726,6 +765,10 @@ h1 {
     padding: 12px 12px 13px;
     border-radius: 16px;
     min-height: 0;
+  }
+
+  .rail-card-stack {
+    gap: 8px;
   }
 
   .rail-label {
