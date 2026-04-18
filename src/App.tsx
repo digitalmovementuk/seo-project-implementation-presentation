@@ -83,9 +83,9 @@ function App() {
         animate={
           prefersReducedMotion
             ? undefined
-            : { x: [0, 48, -24, 0], y: [0, -36, 16, 0], scale: [1, 1.08, 0.96, 1] }
+            : { x: [0, 22, -14, 0], y: [0, -20, 12, 0], scale: [1, 1.04, 0.98, 1] }
         }
-        transition={{ duration: 18, repeat: Number.POSITIVE_INFINITY, ease: 'easeInOut' }}
+        transition={{ duration: 22, repeat: Number.POSITIVE_INFINITY, ease: 'easeInOut' }}
       />
       <motion.div
         aria-hidden="true"
@@ -93,29 +93,36 @@ function App() {
         animate={
           prefersReducedMotion
             ? undefined
-            : { x: [0, -44, 22, 0], y: [0, 28, -22, 0], scale: [1, 0.94, 1.06, 1] }
+            : { x: [0, -18, 14, 0], y: [0, 16, -14, 0], scale: [1, 0.97, 1.03, 1] }
         }
-        transition={{ duration: 22, repeat: Number.POSITIVE_INFINITY, ease: 'easeInOut' }}
+        transition={{ duration: 26, repeat: Number.POSITIVE_INFINITY, ease: 'easeInOut' }}
       />
 
       <div className="presentation-frame">
         <header className="presentation-header">
-          <div className="brand-lockup">
-            <img
-              className="brand-logo"
-              src={brandLogoPath}
-              alt="Digital Movement"
-              width="1098"
-              height="234"
-            />
-            <span className="brand-kicker">Web Presentation</span>
-            <span className="brand-name">SEO Project Implementation</span>
+          <div className="brand-chip">
+            <div className="brand-logo-wrap">
+              <img
+                className="brand-logo"
+                src={brandLogoPath}
+                alt="Digital Movement"
+                width="1098"
+                height="234"
+              />
+            </div>
+
+            <div className="brand-copy">
+              <span className="brand-kicker">Lead Presentation</span>
+              <span className="brand-name">SEO Project Implementation</span>
+            </div>
           </div>
 
           <div className="header-meta">
-            <span>{String(activeIndex + 1).padStart(2, '0')}</span>
+            <span className="header-count">
+              {String(activeIndex + 1).padStart(2, '0')} / {String(slides.length).padStart(2, '0')}
+            </span>
             <span className="header-divider" />
-            <span>{String(slides.length).padStart(2, '0')}</span>
+            <span>{activeSlide.eyebrow}</span>
           </div>
         </header>
 
@@ -124,6 +131,7 @@ function App() {
             <motion.article
               key={activeSlide.id}
               className="slide"
+              data-has-deliverable={activeSlide.deliverable ? 'true' : 'false'}
               custom={direction}
               drag="x"
               dragConstraints={{ left: 0, right: 0 }}
@@ -134,23 +142,23 @@ function App() {
               variants={{
                 enter: (customDirection: number) => ({
                   opacity: 0,
-                  x: customDirection > 0 ? 140 : -140,
-                  rotate: customDirection > 0 ? 2 : -2,
-                  scale: 0.98,
+                  x: customDirection > 0 ? 72 : -72,
+                  rotate: customDirection > 0 ? 0.8 : -0.8,
+                  scale: 0.994,
                 }),
                 center: {
                   opacity: 1,
                   x: 0,
                   rotate: 0,
                   scale: 1,
-                  transition: { duration: 0.48, ease: [0.22, 1, 0.36, 1] },
+                  transition: { duration: 0.42, ease: [0.22, 1, 0.36, 1] },
                 },
                 exit: (customDirection: number) => ({
                   opacity: 0,
-                  x: customDirection > 0 ? -160 : 160,
-                  rotate: customDirection > 0 ? -1.5 : 1.5,
-                  scale: 0.985,
-                  transition: { duration: 0.34, ease: [0.22, 1, 0.36, 1] },
+                  x: customDirection > 0 ? -64 : 64,
+                  rotate: customDirection > 0 ? -0.8 : 0.8,
+                  scale: 0.994,
+                  transition: { duration: 0.28, ease: [0.22, 1, 0.36, 1] },
                 }),
               }}
               onDragEnd={handleDragEnd}
@@ -175,7 +183,10 @@ function App() {
                   </ul>
                 </section>
 
-                <aside className="slide-rail">
+                <aside
+                  className="slide-rail"
+                  data-has-deliverable={activeSlide.deliverable ? 'true' : 'false'}
+                >
                   <div className="rail-stat">
                     <span className="rail-label">{activeSlide.primaryPanelLabel}</span>
                     <p>{activeSlide.primaryPanelText}</p>
@@ -240,7 +251,7 @@ function App() {
           </div>
 
           <div className="footer-note">
-            Swipe on touch, drag on desktop, or use arrow keys
+            Swipe, tap, or use arrow keys
           </div>
         </footer>
       </div>
