@@ -5,6 +5,9 @@ type SlideVisual = {
   alt: string
   label: string
   title: string
+  position: string
+  scale: number
+  filter: string
 }
 
 export type PresentationSlide = {
@@ -20,31 +23,184 @@ export type PresentationSlide = {
   visual: SlideVisual
 }
 
+const baseVisualFilter = 'saturate(0.82) contrast(0.95) brightness(0.88)'
+
+function createVisual(
+  src: string,
+  alt: string,
+  label: string,
+  title: string,
+  position: string,
+  scale: number,
+  filter = baseVisualFilter,
+): SlideVisual {
+  return { src, alt, label, title, position, scale, filter }
+}
+
+const imageSources = {
+  growthPath: stockAsset('dedicated/growth-path.jpg'),
+  clientGoals: stockAsset('dedicated/client-goals.jpg'),
+  milestone1: stockAsset('dedicated/milestone-1.jpg'),
+  receive1: stockAsset('dedicated/receive-1.jpg'),
+  milestone2: stockAsset('dedicated/milestone-2.jpg'),
+  receive2: stockAsset('dedicated/receive-2.jpg'),
+  milestone3: stockAsset('dedicated/milestone-3.jpg'),
+  receive3: stockAsset('dedicated/receive-3.jpg'),
+  milestone4: stockAsset('dedicated/milestone-4.jpg'),
+  receive4: stockAsset('dedicated/receive-4.jpg'),
+  milestone5: stockAsset('dedicated/milestone-5.jpg'),
+  timeline: stockAsset('dedicated/timeline.jpg'),
+  fullStack: stockAsset('dedicated/full-stack.jpg'),
+  growthLogic: stockAsset('dedicated/growth-logic.jpg'),
+  commercialSense: stockAsset('dedicated/commercial-sense.jpg'),
+  nextStep: stockAsset('dedicated/next-step.jpg'),
+}
+
 const visuals = {
-  motion: {
-    src: stockAsset('motion-blur-dark.jpg'),
-    alt: 'Abstract monochrome motion blur',
-    label: 'Mood frame',
-    title: 'Momentum and movement',
-  },
-  city: {
-    src: stockAsset('city-dusk.jpg'),
-    alt: 'Aerial city skyline at dusk',
-    label: 'Location frame',
-    title: 'Markets, density, and reach',
-  },
-  clipboard: {
-    src: stockAsset('writing-clipboard.jpg'),
-    alt: 'Person writing on a clipboard beside a laptop',
-    label: 'Planning frame',
-    title: 'Analysis, planning, and prioritisation',
-  },
-  workspace: {
-    src: stockAsset('minimal-workspace.jpg'),
-    alt: 'Minimal desk workspace with laptop and warm light',
-    label: 'Execution frame',
-    title: 'Clarity, craft, and implementation',
-  },
+  growthPath: createVisual(
+    imageSources.growthPath,
+    'Abstract monochrome motion blur suggesting acceleration',
+    'Growth frame',
+    'Visibility becomes momentum',
+    '50% 52%',
+    1.14,
+    'grayscale(0.05) saturate(0.72) contrast(1.02) brightness(0.82)',
+  ),
+  clientGoals: createVisual(
+    imageSources.clientGoals,
+    'Aerial city skyline at dusk with dense lights',
+    'Demand frame',
+    'Real buyers already exist in the market',
+    '58% 42%',
+    1.08,
+    'saturate(0.78) contrast(0.96) brightness(0.9)',
+  ),
+  milestone1: createVisual(
+    imageSources.milestone1,
+    'Person writing notes beside a laptop',
+    'Research frame',
+    'Evidence replaces assumption',
+    '62% 40%',
+    1.09,
+    'saturate(0.74) contrast(0.98) brightness(0.86)',
+  ),
+  receive1: createVisual(
+    imageSources.receive1,
+    'Close crop of planning notes beside a laptop',
+    'Report frame',
+    'Findings turned into clarity',
+    '48% 64%',
+    1.22,
+    'grayscale(0.1) saturate(0.7) contrast(1.04) brightness(0.83)',
+  ),
+  milestone2: createVisual(
+    imageSources.milestone2,
+    'City skyline seen from above at dusk',
+    'Location frame',
+    'Markets, density, and reach',
+    '54% 54%',
+    1.12,
+    'saturate(0.82) contrast(0.98) brightness(0.88)',
+  ),
+  receive2: createVisual(
+    imageSources.receive2,
+    'Closer crop of a city skyline and street grid',
+    'Priority frame',
+    'The strongest places stand out first',
+    '72% 36%',
+    1.26,
+    'grayscale(0.08) saturate(0.75) contrast(1.03) brightness(0.85)',
+  ),
+  milestone3: createVisual(
+    imageSources.milestone3,
+    'Minimal workspace with laptop and notebook',
+    'Strategy frame',
+    'Loose ideas become a page system',
+    '62% 44%',
+    1.08,
+    'saturate(0.78) contrast(0.97) brightness(0.87)',
+  ),
+  receive3: createVisual(
+    imageSources.receive3,
+    'Minimal desk surface with warm directional light',
+    'Blueprint frame',
+    'A practical structure to build from',
+    '34% 48%',
+    1.16,
+    'grayscale(0.06) saturate(0.7) contrast(1.02) brightness(0.84)',
+  ),
+  milestone4: createVisual(
+    imageSources.milestone4,
+    'Planning notes and laptop arranged on a desk',
+    'Briefing frame',
+    'Intent and messaging become page direction',
+    '42% 34%',
+    1.14,
+    'saturate(0.76) contrast(1) brightness(0.88)',
+  ),
+  receive4: createVisual(
+    imageSources.receive4,
+    'Editorial crop of a clipboard and planning material',
+    'Content frame',
+    'The page no longer starts from zero',
+    '74% 62%',
+    1.24,
+    'grayscale(0.12) saturate(0.68) contrast(1.05) brightness(0.84)',
+  ),
+  milestone5: createVisual(
+    imageSources.milestone5,
+    'Dark motion blur with directional streaking',
+    'Launch frame',
+    'Traction starts where return is strongest',
+    '44% 56%',
+    1.18,
+    'grayscale(0.02) saturate(0.76) contrast(1.06) brightness(0.8)',
+  ),
+  timeline: createVisual(
+    imageSources.timeline,
+    'Calm workspace surface with laptop and warm side light',
+    'Timing frame',
+    'Clear stages make progress legible',
+    '52% 66%',
+    1.18,
+    'grayscale(0.08) saturate(0.72) contrast(1.02) brightness(0.84)',
+  ),
+  fullStack: createVisual(
+    imageSources.fullStack,
+    'Minimal workstation with layered materials',
+    'Asset frame',
+    'The output becomes a reusable stack of assets',
+    '70% 28%',
+    1.24,
+    'saturate(0.74) contrast(0.98) brightness(0.86)',
+  ),
+  growthLogic: createVisual(
+    imageSources.growthLogic,
+    'Abstract motion trail with soft editorial blur',
+    'Impact frame',
+    'Better decisions compound into growth',
+    '58% 46%',
+    1.1,
+    'grayscale(0.03) saturate(0.74) contrast(1.04) brightness(0.82)',
+  ),
+  commercialSense: createVisual(
+    imageSources.commercialSense,
+    'Moody city grid at dusk with deep contrast',
+    'Focus frame',
+    'Priority creates commercial efficiency',
+    '40% 34%',
+    1.2,
+    'grayscale(0.04) saturate(0.78) contrast(1.04) brightness(0.84)',
+  ),
+  nextStep: createVisual(
+    imageSources.nextStep,
+    'Quiet desktop setup prepared for execution',
+    'Next-step frame',
+    'Start with the strategy that can actually launch',
+    '48% 54%',
+    1.12,
+    'saturate(0.8) contrast(0.98) brightness(0.88)',
+  ),
 }
 
 export const slides: PresentationSlide[] = [
@@ -64,7 +220,7 @@ export const slides: PresentationSlide[] = [
     primaryPanelText:
       'This gives the lead an immediate answer to the only question that matters: how the work becomes commercial opportunity.',
     accentWord: 'Growth',
-    visual: visuals.motion,
+    visual: visuals.growthPath,
   },
   {
     id: 'client-goals',
@@ -82,7 +238,7 @@ export const slides: PresentationSlide[] = [
     primaryPanelText:
       'The project stays focused on what a buyer can understand fast: visibility, relevance, and enquiries.',
     accentWord: 'Demand',
-    visual: visuals.motion,
+    visual: visuals.clientGoals,
   },
   {
     id: 'milestone-1',
@@ -101,7 +257,7 @@ export const slides: PresentationSlide[] = [
       'This replaces guessing with evidence, so the business knows where growth is most likely to come from.',
     deliverable: 'SEO Opportunity Analysis Report',
     accentWord: 'Analysis',
-    visual: visuals.clipboard,
+    visual: visuals.milestone1,
   },
   {
     id: 'receive-1',
@@ -119,7 +275,7 @@ export const slides: PresentationSlide[] = [
     primaryPanelText:
       'This helps the client stop wasting time on low-value assumptions and focus on what is genuinely worth pursuing.',
     accentWord: 'Clarity',
-    visual: visuals.clipboard,
+    visual: visuals.receive1,
   },
   {
     id: 'milestone-2',
@@ -138,7 +294,7 @@ export const slides: PresentationSlide[] = [
       'The client gets a smarter path to local visibility instead of trying to chase every location equally.',
     deliverable: 'Location Opportunity and Priority Map',
     accentWord: 'Local',
-    visual: visuals.city,
+    visual: visuals.milestone2,
   },
   {
     id: 'receive-2',
@@ -156,7 +312,7 @@ export const slides: PresentationSlide[] = [
     primaryPanelText:
       'The rollout becomes more efficient because attention goes first to the locations most likely to generate leads.',
     accentWord: 'Priority',
-    visual: visuals.city,
+    visual: visuals.receive2,
   },
   {
     id: 'milestone-3',
@@ -175,7 +331,7 @@ export const slides: PresentationSlide[] = [
       'This is where SEO stops being a loose set of ideas and becomes a focused commercial plan.',
     deliverable: 'Full SEO Page Strategy Document',
     accentWord: 'Strategy',
-    visual: visuals.clipboard,
+    visual: visuals.milestone3,
   },
   {
     id: 'receive-3',
@@ -193,7 +349,7 @@ export const slides: PresentationSlide[] = [
     primaryPanelText:
       'This creates speed and alignment because every next step is tied back to visibility and growth.',
     accentWord: 'Blueprint',
-    visual: visuals.workspace,
+    visual: visuals.receive3,
   },
   {
     id: 'milestone-4',
@@ -212,7 +368,7 @@ export const slides: PresentationSlide[] = [
       'Getting found is only part of the job. The page also has to make sense, build trust, and convert.',
     deliverable: 'SEO Page Brief Pack',
     accentWord: 'Messaging',
-    visual: visuals.workspace,
+    visual: visuals.milestone4,
   },
   {
     id: 'receive-4',
@@ -230,7 +386,7 @@ export const slides: PresentationSlide[] = [
     primaryPanelText:
       'This improves consistency and reduces friction because the most important pages no longer start from a blank page.',
     accentWord: 'Content',
-    visual: visuals.workspace,
+    visual: visuals.receive4,
   },
   {
     id: 'milestone-5',
@@ -249,7 +405,7 @@ export const slides: PresentationSlide[] = [
       'The client sees early momentum where the return is most likely to be strongest, instead of waiting for everything.',
     deliverable: 'Priority Launch Package',
     accentWord: 'Launch',
-    visual: visuals.motion,
+    visual: visuals.milestone5,
   },
   {
     id: 'timeline',
@@ -268,7 +424,7 @@ export const slides: PresentationSlide[] = [
     primaryPanelText:
       'The lead can see exactly when clarity, structure, and launch-ready direction are created across the project.',
     accentWord: 'Timing',
-    visual: visuals.clipboard,
+    visual: visuals.timeline,
   },
   {
     id: 'full-stack',
@@ -287,7 +443,7 @@ export const slides: PresentationSlide[] = [
     primaryPanelText:
       'This turns the project into a long-term business asset rather than a short-term burst of SEO activity.',
     accentWord: 'Assets',
-    visual: visuals.workspace,
+    visual: visuals.fullStack,
   },
   {
     id: 'growth-logic',
@@ -305,7 +461,7 @@ export const slides: PresentationSlide[] = [
     primaryPanelText:
       'Every deliverable reduces guesswork and increases the odds that the work turns into real commercial opportunity.',
     accentWord: 'Impact',
-    visual: visuals.motion,
+    visual: visuals.growthLogic,
   },
   {
     id: 'commercial-sense',
@@ -323,7 +479,7 @@ export const slides: PresentationSlide[] = [
     primaryPanelText:
       'If a step does not help the client make better growth decisions, it does not belong in the process.',
     accentWord: 'Focus',
-    visual: visuals.motion,
+    visual: visuals.commercialSense,
   },
   {
     id: 'next-step',
@@ -341,6 +497,6 @@ export const slides: PresentationSlide[] = [
     primaryPanelText:
       'This gives the lead a clean, sensible first step and makes the engagement feel grounded from the start.',
     accentWord: 'Action',
-    visual: visuals.workspace,
+    visual: visuals.nextStep,
   },
 ]

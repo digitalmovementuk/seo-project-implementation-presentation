@@ -3,15 +3,15 @@ import { expect, test } from '@playwright/test'
 test('slide navigation works from keyboard and controls', async ({ page }, testInfo) => {
   await page.goto('/')
 
-  await expect(page.locator('h1')).toContainText(
-    'How an SEO project turns into business growth',
-  )
+  await expect(page.getByRole('heading', { level: 1, name: /How an SEO project turns into business growth/i })).toBeVisible()
 
   await page.keyboard.press('ArrowRight')
-  await expect(page.locator('h1')).toContainText('What clients actually want from SEO')
+  await expect(
+    page.getByRole('heading', { level: 1, name: /What clients actually want from SEO/i }),
+  ).toBeVisible()
 
   if (testInfo.project.name === 'desktop-chromium') {
-    const slide = page.locator('.slide')
+    const slide = page.locator('.slide').last()
     const box = await slide.boundingBox()
 
     if (!box) {
@@ -25,14 +25,20 @@ test('slide navigation works from keyboard and controls', async ({ page }, testI
     })
     await page.mouse.up()
 
-    await expect(page.locator('h1')).toContainText('In-depth analysis of SEO opportunities')
+    await expect(
+      page.getByRole('heading', { level: 1, name: /In-depth analysis of SEO opportunities/i }),
+    ).toBeVisible()
   } else {
     await page.locator('.nav-button--primary').click()
-    await expect(page.locator('h1')).toContainText('In-depth analysis of SEO opportunities')
+    await expect(
+      page.getByRole('heading', { level: 1, name: /In-depth analysis of SEO opportunities/i }),
+    ).toBeVisible()
   }
 
   await page.locator('.progress-segment').nth(10).click()
-  await expect(page.locator('h1')).toContainText('Launch of priority SEO assets')
+  await expect(
+    page.getByRole('heading', { level: 1, name: /Launch of priority SEO assets/i }),
+  ).toBeVisible()
 
   await expect(page.locator('.brand-logo')).toBeVisible()
   await expect
@@ -40,8 +46,9 @@ test('slide navigation works from keyboard and controls', async ({ page }, testI
     .toBeGreaterThan(0)
 
   if (testInfo.project.name === 'desktop-chromium') {
-    await expect(page.locator('.rail-visual-image')).toBeVisible()
-    await expect(page.locator('.slide-brand-mark img')).toBeVisible()
+    const activeSlide = page.locator('.slide').last()
+    await expect(activeSlide.locator('.rail-visual-image')).toBeVisible()
+    await expect(activeSlide.locator('.slide-brand-mark img')).toBeVisible()
   }
 })
 

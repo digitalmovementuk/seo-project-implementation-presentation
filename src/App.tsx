@@ -8,6 +8,7 @@ import { startTransition, useEffect, useState } from 'react'
 import { slides } from './slides'
 
 const swipeThreshold = 90
+const slideEase = [0.22, 1, 0.36, 1] as const
 const brandLogoPath = `${import.meta.env.BASE_URL}digital-movement-logo-negative.svg`
 
 function clampSlideIndex(index: number) {
@@ -22,6 +23,11 @@ function App() {
   const activeSlide = slides[activeIndex]
   const canGoBack = activeIndex > 0
   const canGoForward = activeIndex < slides.length - 1
+  const activeVisualStyle = {
+    objectPosition: activeSlide.visual.position,
+    transform: `scale(${activeSlide.visual.scale})`,
+    filter: activeSlide.visual.filter,
+  }
 
   const navigateTo = (nextIndex: number) => {
     const clampedIndex = clampSlideIndex(nextIndex)
@@ -127,7 +133,7 @@ function App() {
         </header>
 
         <main className="deck-stage">
-          <AnimatePresence custom={direction} initial={false} mode="wait">
+          <AnimatePresence custom={direction} initial={false} mode="sync">
             <motion.article
               key={activeSlide.id}
               className="slide"
@@ -135,30 +141,46 @@ function App() {
               custom={direction}
               drag="x"
               dragConstraints={{ left: 0, right: 0 }}
-              dragElastic={0.1}
+              dragElastic={0.14}
+              dragMomentum={false}
               initial={prefersReducedMotion ? { opacity: 0 } : 'enter'}
               animate={prefersReducedMotion ? { opacity: 1 } : 'center'}
               exit={prefersReducedMotion ? { opacity: 0 } : 'exit'}
               variants={{
                 enter: (customDirection: number) => ({
                   opacity: 0,
-                  x: customDirection > 0 ? 72 : -72,
-                  rotate: customDirection > 0 ? 0.8 : -0.8,
-                  scale: 0.994,
+                  x: customDirection > 0 ? 104 : -104,
+                  rotate: customDirection > 0 ? 0.45 : -0.45,
+                  scale: 0.986,
+                  filter: 'blur(10px)',
                 }),
                 center: {
                   opacity: 1,
                   x: 0,
                   rotate: 0,
                   scale: 1,
-                  transition: { duration: 0.42, ease: [0.22, 1, 0.36, 1] },
+                  filter: 'blur(0px)',
+                  transition: {
+                    x: { type: 'spring', stiffness: 240, damping: 30, mass: 0.92 },
+                    opacity: { duration: 0.26, ease: slideEase },
+                    rotate: { duration: 0.42, ease: slideEase },
+                    scale: { duration: 0.42, ease: slideEase },
+                    filter: { duration: 0.3, ease: slideEase },
+                  },
                 },
                 exit: (customDirection: number) => ({
                   opacity: 0,
-                  x: customDirection > 0 ? -64 : 64,
-                  rotate: customDirection > 0 ? -0.8 : 0.8,
-                  scale: 0.994,
-                  transition: { duration: 0.28, ease: [0.22, 1, 0.36, 1] },
+                  x: customDirection > 0 ? -92 : 92,
+                  rotate: customDirection > 0 ? -0.35 : 0.35,
+                  scale: 0.99,
+                  filter: 'blur(8px)',
+                  transition: {
+                    x: { duration: 0.34, ease: [0.4, 0, 0.2, 1] },
+                    opacity: { duration: 0.22, ease: slideEase },
+                    rotate: { duration: 0.28, ease: slideEase },
+                    scale: { duration: 0.28, ease: slideEase },
+                    filter: { duration: 0.22, ease: slideEase },
+                  },
                 }),
               }}
               onDragEnd={handleDragEnd}
@@ -193,6 +215,7 @@ function App() {
                       src={activeSlide.visual.src}
                       alt={activeSlide.visual.alt}
                       loading="eager"
+                      style={activeVisualStyle}
                     />
                     <div className="rail-visual-scrim" aria-hidden="true" />
                     <div className="rail-visual-copy">
