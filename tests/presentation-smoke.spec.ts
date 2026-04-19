@@ -44,3 +44,40 @@ test('slide navigation works from keyboard and controls', async ({ page }, testI
     await expect(page.locator('.slide-brand-mark img')).toBeVisible()
   }
 })
+
+test('iphone layout keeps the slide copy clear of the bottom info boxes', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'iphone-14-chromium')
+
+  await page.goto('/')
+  const progressSegments = page.locator('.progress-segment')
+  const totalSlides = await progressSegments.count()
+
+  for (let index = 0; index < totalSlides; index += 1) {
+    await progressSegments.nth(index).click()
+    await page.waitForTimeout(700)
+
+    const metrics = await page.evaluate(() => {
+      const rail = document.querySelector('.slide-rail')
+      const lastBullet = document.querySelector('.slide-bullets li:last-child')
+      const summary = document.querySelector('.slide-summary')
+      const lastText = lastBullet ?? summary
+
+      return {
+        railTop: rail?.getBoundingClientRect().top ?? 0,
+        lastTextBottom: lastText?.getBoundingClientRect().bottom ?? 0,
+        slideBottom: document.querySelector('.slide')?.getBoundingClientRect().bottom ?? 0,
+        viewportHeight: window.innerHeight,
+      }
+    })
+
+    expect(
+      metrics.lastTextBottom,
+      `Slide ${index + 1} text should stay above the info boxes`,
+    ).toBeLessThanOrEqual(metrics.railTop + 1.5)
+
+    expect(
+      metrics.slideBottom,
+      `Slide ${index + 1} should stay inside the first viewport on iPhone`,
+    ).toBeLessThanOrEqual(metrics.viewportHeight)
+  }
+})
